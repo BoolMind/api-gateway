@@ -1,0 +1,12 @@
+version: v2
+plugins:
+  - remote: buf.build/community/stephenh-ts-proto
+    out: ../api-gateway/generated
+    opt:
+      - esModuleInterop=true
+      - outputServices=grpc-js
+      - outputClientImpl=true
+      - nestJs=true
+      - useOptionals=messages
+      - returnObservable=true
+      - addGrpcMetadata=true
