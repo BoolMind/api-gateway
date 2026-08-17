@@ -162,7 +162,6 @@ export class SystemHealthIndicator extends HealthIndicator {
           return { idle, total };
         }
       } catch {
-        // Fall through to the cross-platform os.cpus() implementation.
       }
     }
 

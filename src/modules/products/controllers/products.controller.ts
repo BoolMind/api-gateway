@@ -26,8 +26,6 @@ export class ProductsController {
     return this.productsService.create(dto);
   }
 
-  // Two-segment paths — no collision with ':id', but kept above it for
-  // readability/consistency with the categories controller.
   @Get('category/:categoryId')
   findByCategory(@Param('categoryId', ParseIntPipe) categoryId: number) {
     return this.productsService.findByCategory(categoryId);

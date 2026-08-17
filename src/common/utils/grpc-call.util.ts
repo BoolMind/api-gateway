@@ -27,9 +27,7 @@ export async function callGrpc<T>(
       source$.pipe(timeout(options.timeoutMs)),
     );
   } catch (error) {
-    /**
-     * Client-side timeout.
-     */
+   
     if (error instanceof TimeoutError) {
       throw new UpstreamGrpcException(
         GrpcStatus.DEADLINE_EXCEEDED,
@@ -38,17 +36,7 @@ export async function callGrpc<T>(
       );
     }
 
-    /**
-     * gRPC errors coming from the upstream microservice.
-     */
     if (isGrpcError(error)) {
-      console.log('========== API GATEWAY gRPC ERROR ==========');
-      console.log('error:', error);
-      console.log('error.code:', error.code);
-      console.log('error.details:', error.details);
-      console.log('error.message:', error.message);
-      console.log('============================================');
-
       const code =
         typeof error.code === 'number'
           ? error.code
@@ -67,10 +55,6 @@ export async function callGrpc<T>(
         options.source,
       );
     }
-
-    /**
-     * Completely unexpected client-side error.
-     */
     throw new UpstreamGrpcException(
       GrpcStatus.UNKNOWN,
       'Unknown upstream error',

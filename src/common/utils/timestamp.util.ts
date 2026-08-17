@@ -3,10 +3,6 @@ interface ProtoTimestamp {
   nanos: number;
 }
 
-/**
- * ts-proto's exact numeric type for int64 `seconds` depends on generator
- * options (plain number vs string), so this accepts either defensively.
- */
 export function grpcTimestampToIso(
   timestamp: ProtoTimestamp | undefined,
 ): string | undefined {

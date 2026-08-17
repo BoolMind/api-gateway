@@ -15,24 +15,12 @@ export class HealthController {
     private readonly healthGrpcClient: HealthGrpcClient,
   ) {}
 
-  /**
-   * Liveness check.
-   *
-   * Only verifies that the API Gateway process is alive.
-   * It intentionally does not check downstream services or system resources.
-   */
   @Get('live')
   @HealthCheck()
   live() {
     return this.health.check([]);
   }
 
-  /**
-   * Readiness check.
-   *
-   * Verifies that the gateway and its required dependencies
-   * are healthy enough to receive traffic.
-   */
   @Get('ready')
   @HealthCheck()
   ready() {

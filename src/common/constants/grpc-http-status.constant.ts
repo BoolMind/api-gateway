@@ -1,12 +1,6 @@
 import { status as GrpcStatus } from '@grpc/grpc-js';
 import { HttpStatus } from '@nestjs/common';
 
-/**
- * Maps every gRPC status code to the HTTP status code the gateway should
- * return to REST clients. Keep this exhaustive — any gRPC status a
- * microservice can legitimately return must have an entry here, and
- * anything unmapped falls back to 500 (see grpc-exception.filter.ts).
- */
 export const GRPC_TO_HTTP_STATUS: Record<number, HttpStatus> = {
   [GrpcStatus.OK]: HttpStatus.OK,
   [GrpcStatus.CANCELLED]: HttpStatus.INTERNAL_SERVER_ERROR,

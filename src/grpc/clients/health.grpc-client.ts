@@ -5,25 +5,11 @@ import { ClientGrpc } from '@nestjs/microservices';
 import { callGrpc } from '@common/utils';
 import type { GrpcClientsConfig } from '@config/index';
 
-// NOTE: assumes health.proto exports a `HealthServiceClient` interface
-// (ts-proto nestJs=true) with a `check` method — verify after
-// `npm run proto:generate`, same caveat as the other grpc clients.
 import {
   HealthCheckResponse,
   HealthServiceClient,
 } from '@ecommerce/contracts/generated/ecommerce/common/v1/health';
 
-/**
- * Calls the real HealthService.Check RPC (the same one catalog-service and
- * user-service already implement) on both downstream connections.
- *
- * This assumes both services' main.ts bootstrap their gRPC microservice
- * with BOTH their own package (ecommerce.user.v1 / ecommerce.catalog.v1)
- * AND ecommerce.common.v1 on the same port — see GrpcClientsModule, which
- * registers protoPath/package as arrays for exactly this. If a service
- * only serves its own package, Check will return UNIMPLEMENTED and this
- * needs its own dedicated connection instead.
- */
 @Injectable()
 export class HealthGrpcClient implements OnModuleInit {
   private userHealthService!: HealthServiceClient;
